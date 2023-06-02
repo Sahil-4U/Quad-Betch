@@ -3,13 +3,12 @@ import axios from 'axios';
 import { Badge, Button, Card, Col, Container, Row } from 'react-bootstrap';
 
 
-function Details() {
+function Details(props) {
     const url = "https://api.tvmaze.com/search/shows?q=all";
     const [data, setData] = useState([]);
 
     const fetchInfo = () => {
         return axios.get(url).then((response) => {
-            console.log(response.data);
             setData(response.data)
         });
     }
@@ -17,6 +16,11 @@ function Details() {
     useEffect(() => {
         fetchInfo();
     }, [])
+
+
+    const handleBuy=(mov)=>{
+       props.handleSetMovie(mov);
+    }
 
     return (
         <div>
@@ -38,7 +42,7 @@ function Details() {
                                             <Card.Text>
                                             <Badge bg="warning">Status :</Badge>{' '}{movies.show.status}
                                             </Card.Text>
-                                            <Button variant="outline-danger" size='lg' >Buy Ticket</Button>
+                                            <Button variant="outline-danger" size='lg' onClick={()=>handleBuy(movies)} >Buy Ticket</Button>
                                         </Card.Body>
                                     </Card>
                                 </Col>
